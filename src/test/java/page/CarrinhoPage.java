@@ -1,16 +1,9 @@
 package page;
 
-import core.ChromeDriverManager;
+import core.WebDriverManager;
 
-public class CarrinhoPage {
-	public static void acessarSite(String enderecoSite) {
-		ChromeDriverManager chromeDriverManager= new ChromeDriverManager();
-		
-		chromeDriverManager.iniciarDriver();
-		try {
-		chromeDriverManager.getDriver().wait(5000);
-		chromeDriverManager.fecharDriver();
-		}
-		catch(Exception e) {}
+public class CarrinhoPage extends WebDriverManager {
+	public static void acessarSite(String url) {
+		acessarPaginaSite(url);
 	}
 }

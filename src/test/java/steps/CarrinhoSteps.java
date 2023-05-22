@@ -5,7 +5,7 @@ import page.CarrinhoPage;
 
 public class CarrinhoSteps {
 	@When("que acesso o site {string}")
-	public static void queAcessoOSite(String enderecoSite) {
-		CarrinhoPage.acessarSite(enderecoSite);
+	public static void queAcessoOSite(String url) {
+		CarrinhoPage.acessarSite(url);
 	}
 }

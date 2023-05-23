@@ -1,5 +1,7 @@
 package steps;
 
+import core.WebDriverManager;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -28,5 +30,10 @@ public class HomeSteps {
 	@And("clico na sugestao desejada {int}")
 	public static void clicoNaSugestaoDesejada(int opcaoDesejada) {
 		HomePage.clicarOpcaoSugestaoBusca(opcaoDesejada);
+	}
+	
+	@After
+	public void fecharBrowser() {
+		WebDriverManager.fecharDriver();
 	}
 }

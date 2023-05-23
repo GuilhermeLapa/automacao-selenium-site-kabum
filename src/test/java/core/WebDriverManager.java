@@ -30,21 +30,21 @@ public class WebDriverManager {
 		WebDriverManager.driver.manage().window().maximize();
 	}
 	
-	protected static void fecharDriver() {
+	public static void fecharDriver() {
 		if(driver != null) {
 			driver.quit();
 			driver= null;
 		}
 	}
-	
-	protected static WebDriver iniciarDriver(TiposBrowser nomeBrowser) {
+	/*
+	private static WebDriver iniciarDriver(TiposBrowser nomeBrowser) {
 		if(driver == null) {
 			criarDriver(nomeBrowser);
 		}
 		
 		return driver;
 	}
-	
+	*/
 	public WebDriver getDriver() {
 		return driver;
 	}

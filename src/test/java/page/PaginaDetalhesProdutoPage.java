@@ -12,7 +12,7 @@ public class PaginaDetalhesProdutoPage extends WebDriverManager {
 	private static final String xpathBtnOk= "//button[@id='botaoCalcularFrete']";
 	private static final String xpathModalCalcularFrete= "//div[@id='modalWrapper']/div";
 	private static final String xpathModalCalcularFreteIconeX= "[data-testid='btnClose']";
-	private static final String xpathBtnComprar= "//div[@id='blocoValores']//button[contains(text(),'COMPRAR')]";//"//button[@class='sc-8b813326-0 bihJGp']";
+	private static final String xpathBtnComprar= "//div[@id='blocoValores']//button[contains(text(),'COMPRAR')]";
 	
 	private static WebElement campoCep;
 	private static WebElement btnOk;
@@ -53,6 +53,11 @@ public class PaginaDetalhesProdutoPage extends WebDriverManager {
 	}
 	
 	public static void clicarBtnComprar() {
+		/*
+		 * é necessário o try/catch para o clique no 
+		 * botão comprar pois após fechar o modal há 
+		 * um refresh na página que deixa os webelements obsoletos
+		 */
 		try {
 			clicarElemento(btnComprar);
 		}
@@ -63,6 +68,11 @@ public class PaginaDetalhesProdutoPage extends WebDriverManager {
 	}
 	
 	public static String limparString(String valor) {
+		/*
+		 * método para remover caracteres especiais do nome do produto
+		 * e então formatá-lo para comparar o nome do produto selecionado com 
+		 * o nome que aparece na url de Detalhes do produto 
+		 */
 		String []caracteresParaRemocao= {",", " ", "'", ".", "´", "^", "~"};
 		String resultado= valor;
 		

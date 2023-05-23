@@ -17,5 +17,7 @@ public class CarrinhoPage extends WebDriverManager {
 	
 	public static void verificarDirecionadoPaginaCarrinho() {
 		aguardarUrl(HomePage.url + "carrinho", 3000);
+		aguardarPaginaSerCarregada(3000);
+		Assert.assertTrue(driver.getCurrentUrl().toString().toUpperCase().contains("carrinho".toUpperCase()));
 	}
 }

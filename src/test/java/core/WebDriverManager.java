@@ -2,6 +2,8 @@ package core;
 
 import java.time.Duration;
 import java.util.ArrayList;
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -110,8 +112,8 @@ public class WebDriverManager {
 	
 	protected static void aguardarUrl(String url, long tempoMiliseg) {
 		WebDriverWait wait= new WebDriverWait(driver, Duration.ofMillis(tempoMiliseg));
-		wait.until(ExpectedConditions.urlToBe(url));
-		//Assert.assertTrue(wait.until(ExpectedConditions.urlToBe(url)));
+		//wait.until(ExpectedConditions.urlToBe(url));
+		Assert.assertTrue(wait.until(ExpectedConditions.urlToBe(url)));
 	}
 	
 	protected static void clicarElemento(WebElement elemento) {

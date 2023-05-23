@@ -30,7 +30,6 @@ public class HomePage extends WebDriverManager {
 	
 	public static void escreverValorbusca(String nomeProduto) {
 		escreverCampo(campoBusca, nomeProduto);
-		//digitarCadaLetra(campoBusca, nomeProduto);
 	}
 	
 	public static void verificarListaSugestoesBusca() {

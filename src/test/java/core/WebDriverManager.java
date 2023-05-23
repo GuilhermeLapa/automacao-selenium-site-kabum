@@ -3,6 +3,7 @@ package core;
 import java.time.Duration;
 import java.util.ArrayList;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,7 +25,7 @@ public class WebDriverManager {
 		}
 		
 		//solicita ao webdriver que espere um determinado tempo padrão 
-		WebDriverManager.driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
+		WebDriverManager.driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 		//solicita ao driver que maximize a tela assim que abri-la
 		WebDriverManager.driver.manage().window().maximize();
 	}
@@ -92,50 +93,58 @@ public class WebDriverManager {
 		wait.until(ExpectedConditions.elementToBeClickable(elemento));
 	}
 	
-	protected static void aguardarElemetoClicavel(TiposSeletores tipoSeletor, String caminho, long tempoMiliseg) {
+	protected static void aguardar(long tempoMiliseg) {
 		WebDriverWait wait= new WebDriverWait(driver, Duration.ofMillis(tempoMiliseg));
-		
-		switch (tipoSeletor) {
-			case XPATH:
-				wait.until(ExpectedConditions.elementToBeClickable(By.xpath(caminho)));
-				break;
-			case CSS:
-				wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(caminho)));
-				break;
-		default:
-			break;
+		try {
+			wait.wait(tempoMiliseg);
 		}
+		catch(Exception e) {
+			e.getMessage();
+		}
+	}
+	
+	protected static void aguardarPaginaSerCarregada(long tempoMiliseg) {
+		WebDriverWait wait= new WebDriverWait(driver, Duration.ofMillis(tempoMiliseg));
+		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//body")));
 	}
 	
 	protected static void aguardarUrl(String url, long tempoMiliseg) {
 		WebDriverWait wait= new WebDriverWait(driver, Duration.ofMillis(tempoMiliseg));
 		wait.until(ExpectedConditions.urlToBe(url));
+		//Assert.assertTrue(wait.until(ExpectedConditions.urlToBe(url)));
 	}
 	
 	protected static void clicarElemento(WebElement elemento) {
-		aguardarElemetoVisivel(elemento, 5000);
-		aguardarElemetoClicavel(elemento, 5000);
+		aguardar(3000);
+		aguardarElemetoVisivel(elemento, 3000);
+		aguardarElemetoClicavel(elemento, 3000);
+		
+		Actions acao= new Actions(driver);
+		acao.moveToElement(elemento).build().perform();
+		acao.scrollToElement(elemento).build().perform();
 		
 		try {
+			aguardarElemetoClicavel(elemento, 3000);
 			elemento.click();
 		}
 		catch(Exception e) {
-			Actions acao= new Actions(driver);
-			acao.moveToElement(elemento);
-			acao.click().perform();
+			acao.click().build().perform();
+			
+			e.getMessage();
 		}
 	}
 	
 	protected static WebElement encontrarElemento(TiposSeletores tipoSeletor, String caminho) {
 		WebElement elemento= null;
-		aguardarPresencaElemeto(tipoSeletor, caminho, 5000);
+		aguardar(3000);
+		aguardarPresencaElemeto(tipoSeletor, caminho, 3000);
 		
 		switch (tipoSeletor) {
 			case XPATH:
-				driver.findElement(By.xpath(caminho));
+				elemento= driver.findElement(By.xpath(caminho));
 				break;
 			case CSS:
-				driver.findElement(By.cssSelector(caminho));
+				elemento= driver.findElement(By.cssSelector(caminho));
 				break;
 			default:
 				break;
@@ -146,14 +155,15 @@ public class WebDriverManager {
 	
 	protected static ArrayList<WebElement> encontrarListaElementos(TiposSeletores tipoSeletor, String caminho) {
 		ArrayList<WebElement> listaElementos= new ArrayList<WebElement>();
-		aguardarPresencaElemeto(tipoSeletor, caminho, 5000);
+		aguardar(3000);
+		aguardarPresencaElemeto(tipoSeletor, caminho, 3000);
 		
 		switch (tipoSeletor) {
 			case XPATH:
-				driver.findElements(By.xpath(caminho));
+				listaElementos= (ArrayList<WebElement>) driver.findElements(By.xpath(caminho));
 				break;
 			case CSS:
-				driver.findElements(By.cssSelector(caminho));
+				listaElementos= (ArrayList<WebElement>) driver.findElements(By.cssSelector(caminho));
 				break;
 			default:
 				break;
@@ -163,7 +173,38 @@ public class WebDriverManager {
 	}
 	
 	protected static void escreverCampo(WebElement elemento, String valor) {
-		aguardarElemetoVisivel(elemento, 5000);
+		aguardar(3000);
+		aguardarElemetoVisivel(elemento, 3000);
+		
 		elemento.sendKeys(valor);
+	}
+	
+	protected static void digitarCadaLetra(WebElement elemento, String valor) {
+		Actions acao= new Actions(driver);
+		acao.moveToElement(elemento).build().perform();
+		acao.scrollToElement(elemento).build().perform();
+		
+		aguardar(3000);
+		aguardarElemetoVisivel(elemento, 3000);
+		
+		for(char letra: valor.toCharArray()) {
+			elemento.sendKeys(String.valueOf(letra));
+			aguardar(2000);
+		}
+	}
+	
+	protected static boolean elementoAusente(TiposSeletores tipoSeletor, String caminho) {
+		boolean resultado= false;
+		WebElement elemento= null;
+		
+		try {
+			elemento= encontrarElemento(tipoSeletor, caminho);
+		}
+		catch(NoSuchElementException except) {
+			resultado= true;
+		}
+		finally {
+			return resultado;
+		}
 	}
 }

@@ -8,4 +8,4 @@
   
   
 #### Relatório do Cucumber Reports após conclusão da automação:
-![Relatório do Cucumber Reports após conclusão da automação](https://github.com/GuilhermeLapa/automacao-selenium-site-kabum/assets/14200057/e9642885-abcc-4a0b-bb6d-3a878377d482)
+![Relatório do Cucumber Reports após conclusão da automação](https://github.com/GuilhermeLapa/automacao-selenium-site-kabum/assets/14200057/671a871f-100e-49c2-a2aa-e506449b770b)

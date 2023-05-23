@@ -39,6 +39,7 @@ public class PaginaDetalhesProdutoPage extends WebDriverManager {
 	public static void inicializarElementosModalCalcularFrete() {
 		//TO DO inicializar os outros elementos necessários
 		aguardar(3000);
+		Assert.assertTrue(!elementoAusente(xpathModalCalcularFrete));
 		modalCalcularFrete= encontrarElemento(TiposSeletores.XPATH, xpathModalCalcularFrete);
 		modalCalcularFreteIconeX= encontrarElemento(TiposSeletores.CSS, xpathModalCalcularFreteIconeX);
 	}
@@ -73,7 +74,7 @@ public class PaginaDetalhesProdutoPage extends WebDriverManager {
 		 * e então formatá-lo para comparar o nome do produto selecionado com 
 		 * o nome que aparece na url de Detalhes do produto 
 		 */
-		String []caracteresParaRemocao= {",", " ", "'", ".", "´", "^", "~"};
+		String []caracteresParaRemocao= {",", " ", "'", ".", "´", "^", "~", "--", "---"};
 		String resultado= valor;
 		
 		for(String caracter: caracteresParaRemocao) {

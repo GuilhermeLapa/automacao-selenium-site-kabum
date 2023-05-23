@@ -195,12 +195,12 @@ public class WebDriverManager {
 		}
 	}
 	
-	protected static boolean elementoAusente(TiposSeletores tipoSeletor, String caminho) {
+	protected static boolean elementoAusente(String caminho) {
 		boolean resultado= false;
 		WebElement elemento= null;
 		
 		try {
-			elemento= encontrarElemento(tipoSeletor, caminho);
+			elemento= driver.findElement(By.xpath(caminho));
 		}
 		catch(NoSuchElementException except) {
 			resultado= true;

@@ -18,4 +18,9 @@ public class PreCarrinhoStep {
 	public static void souDirecionadoParaOPreCarrinho() {
 		PreCarrinhoPage.verificarDirecionadoPaginaPreCarrinho();
 	}
+	
+	@And("verifico se ha opcao garantia estendida")
+	public static void verificoSeHaOpcaoGarantiaEstendida() {
+		PreCarrinhoPage.opcaoGarantiaEstendida();
+	}
 }

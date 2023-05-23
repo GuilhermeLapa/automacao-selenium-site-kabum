@@ -18,10 +18,12 @@ Scenario Outline: Validar Produto Adicionado ao Carrinho
 	And verifico que ha o botao Comprar
 	And clico no botao Comprar
 	And sou direcionado para o Precarrinho
+	And verifico se ha opcao garantia estendida
 	And verifico que ha o botao Ir Para o Carrinho
 	And clico no botao Ir Para o Carrinho
 	And sou direcionado para o Carrinho
 	Then verifico que o produto selecionado esta no carrinho
 	Examples: 
-	| site                      | produto  | cep       |
-	| https://www.kabum.com.br/ | notebook | 50030-260 |
+	| site                      | produto     | cep       |
+	| https://www.kabum.com.br/ | notebook    | 50030-260 |
+	| https://www.kabum.com.br/ | notebook lg | 50030-260 |
